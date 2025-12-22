@@ -1,0 +1,22 @@
+# Build-Ausgaben (WICHTIG!)
+build/
+bin/
+obj/
+
+# VS Code Einstellungen
+.vscode/
+
+# macOS Systemdateien
+.DS_Store
+
+# CMake Caches und generierte Dateien
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+install_manifest.txt
+_deps/
+
+# Slint/Rust spezifisch (falls außerhalb von build/ generiert)
+target/
+**/*.rs.bk

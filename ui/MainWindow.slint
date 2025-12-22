@@ -1,0 +1,39 @@
+import { Button } from "std-widgets.slint";
+
+export component MainWindow inherits Window {
+    width: 400px;
+    height: 300px;
+    title: "RaySIX UI";
+
+    // Diese Variablen können von C++ aus gelesen/beschrieben werden
+    in-out property <int> counter: 0;
+    in property <string> user-name: "User";
+
+    // Dieses Event wird nach C++ gesendet
+    callback button-clicked();
+
+    VerticalLayout {
+        padding: 20px;
+        spacing: 10px;
+        alignment: center;
+
+        Text {
+            text: "Hallo \{user-name}!";
+            font-size: 24px;
+            horizontal-alignment: center;
+        }
+
+        Text {
+            text: "Zählerstand: \{counter}";
+            horizontal-alignment: center;
+        }
+
+        Button {
+            text: "Klick mich!";
+            clicked => {
+                // Ruft die C++ Funktion auf
+                root.button-clicked();
+            }
+        }
+    }
+}
