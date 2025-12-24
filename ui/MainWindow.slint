@@ -1,9 +1,16 @@
 import { Button } from "std-widgets.slint";
 
 export component MainWindow inherits Window {
-    width: 400px;
-    height: 300px;
-    title: "RaySIX UI";
+    min-width: 800px;
+    min-height: 600px;
+    title: "Filehandler";
+
+    Rectangle {
+        width: 150px;
+        height: 60px;
+        background: white;
+        border-radius: 10px;
+    }
 
     // Diese Variablen können von C++ aus gelesen/beschrieben werden
     in-out property <int> counter: 0;
@@ -33,6 +40,45 @@ export component MainWindow inherits Window {
             clicked => {
                 // Ruft die C++ Funktion auf
                 root.button-clicked();
+            }
+        }
+    }
+}
+
+export component SecondWindow inherits Window {
+    width: 300px;
+    height: 200px;
+    title: "Ich bin das zweite Fenster";
+    
+    Text {
+        text: "Hallo!";
+    }
+}
+
+export component App inherits Window {
+    property <bool> show_popup: false;
+
+    // Hauptinhalt
+    VerticalLayout {
+        Button {
+            text: "Popup anzeigen";
+            clicked => { root.show_popup = true; }
+        }
+    }
+
+    // Das "Zweite Fenster" als Overlay
+    if (show_popup) : Rectangle {
+        background: rgba(0, 0, 0, 0.5); // Abdunkeln des Hintergrunds
+        
+        Rectangle {
+            width: 200px; height: 150px;
+            background: white;
+            border-radius: 10px;
+            
+            Text { text: "Ich bin ein Overlay"; }
+            Button {
+                text: "Schließen";
+                clicked => { root.show_popup = false; }
             }
         }
     }
