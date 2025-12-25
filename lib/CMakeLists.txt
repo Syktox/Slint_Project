@@ -1,5 +1,5 @@
 set (LibrarySources 
-     lib.cpp lib.h)
+     HangmanLogic.cpp HangmanLogic.h)
 
 #add Librarys
 add_library(${MY_LIB_NAME} STATIC ${LibrarySources})

@@ -1,5 +1,72 @@
-export component MainWindow inherits Window {
+component HangmanVisuals inherits Rectangle {
+    in property <int> fehler_anzahl; // Von 0 bis 6
+    width: 200px;
+    height: 200px;
+    border-color: white;
+
+    // Der Boden (immer sichtbar)
+    Rectangle {
+        y: 190px; height: 5px; width: 150px;
+        background: black;
+    }
+
+    // Der Pfosten (sichtbar ab 1 Fehler)
+    Rectangle {
+        x: 20px; y: 20px; width: 5px; height: 170px;
+        background: black;
+        visible: fehler_anzahl >= 1;
+    }
+
+    // Der Kopf (sichtbar ab 2 Fehlern)
+    // Ellipse {
+    //     x: 80px; y: 40px; width: 40px; height: 40px;
+    //     border-width: 3px; border-color: black;
+    //     visible: fehler_anzahl >= 2;
+    // }
+    
+    // So fährst du fort für Körper, Arme, Beine...
+}
+
+export component AppWindow inherits Window {
     min-width: 800px;
     min-height: 600px;
     title: "Main Window";
+    
+    // Spiel-Logik Variablen
+    in-out property <int> fehler: 0;
+    in-out property <string> wort_anzeige: "_ _ _ _ _";
+    
+    // Callback an C++ (wenn ein Buchstabe gedrückt wurde)
+    callback buchstabe_getippt(string);
+
+    forward-focus: tastatur_input;
+
+    tastatur_input := FocusScope {
+        key-pressed(event) => {
+            // event.text enthält den gedrückten Buchstaben
+            root.buchstabe_getippt(event.text);
+            accept
+        }
+    }
+
+    VerticalLayout {
+        padding: 20px;
+        spacing: 20px;
+        
+        // 1. Die Grafik
+        HangmanVisuals { fehler_anzahl: root.fehler; }
+
+        // 2. Das Wort
+        Text {
+            text: root.wort_anzeige;
+            font-size: 30px;
+            horizontal-alignment: center;
+        }
+        
+        // 3. Status
+        Text {
+            text: "Fehler: " + root.fehler + " / 6";
+            color: root.fehler > 4 ? red : black;
+        }
+    }
 }

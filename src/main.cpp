@@ -1,10 +1,15 @@
 #include "ui.h"
+#include "HangmanLogic.h"
 
-int main(int argc, char **argv) {
-    auto app = App::create();
+int main(void) {
+    // Create GUI of App
+    auto App ( AppWindow::create() );
+    HangmanLogic hLogic;
+
+
     
-    app->run();
     
+    App->run();
     return 0;
 }
 
