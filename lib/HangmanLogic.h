@@ -12,10 +12,13 @@ public:
     HangmanLogic(HangmanLogic&&) = delete;
     HangmanLogic& operator=(HangmanLogic&&) = delete;
 
-    void IncreaseError() { m_errors += 1; }
+    //! Increases the errors the user made
+    void IncreaseErrors() { m_errors += 1; }
+    //! Returns the errors the user made
+    int GetErrors() { return m_errors; }
 
 
 private:
-    int m_errors;
+    int m_errors;   //!< Erros of the User
 
 };

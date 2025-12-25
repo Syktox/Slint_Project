@@ -1,30 +1,65 @@
 component HangmanVisuals inherits Rectangle {
-    in property <int> fehler_anzahl; // Von 0 bis 6
-    width: 200px;
-    height: 200px;
-    border-color: white;
+   in property <int> fehler_anzahl: 0;
+    width: 250px;
+    height: 250px;
 
-    // Der Boden (immer sichtbar)
+    // Bodenplatte
     Rectangle {
-        y: 190px; height: 5px; width: 150px;
-        background: black;
+        y: 230px; height: 10px; width: 180px;
+        background: #444;
     }
 
-    // Der Pfosten (sichtbar ab 1 Fehler)
+    // Galgen-Pfosten
     Rectangle {
-        x: 20px; y: 20px; width: 5px; height: 170px;
-        background: black;
+        x: 40px; y: 20px; width: 8px; height: 210px;
+        background: #444;
         visible: fehler_anzahl >= 1;
     }
 
-    // Der Kopf (sichtbar ab 2 Fehlern)
-    // Ellipse {
-    //     x: 80px; y: 40px; width: 40px; height: 40px;
-    //     border-width: 3px; border-color: black;
-    //     visible: fehler_anzahl >= 2;
-    // }
-    
-    // So fährst du fort für Körper, Arme, Beine...
+    // Galgen-Querbalken
+    Rectangle {
+        x: 40px; y: 20px; width: 100px; height: 8px;
+        background: #444;
+        visible: fehler_anzahl >= 2;
+    }
+
+    // Das Seil
+    Rectangle {
+        x: 135px; y: 20px; width: 3px; height: 30px;
+        background: #666;
+        visible: fehler_anzahl >= 3;
+    }
+
+    // DER MENSCH
+    // Kopf
+    Rectangle {
+    x: 80px; y: 40px; width: 40px; height: 40px;
+    border-width: 3px; border-color: black;
+    // Dieser Wert macht das Quadrat zum Kreis:
+    border-radius: 20px; 
+    visible: fehler_anzahl >= 2;
+}
+
+    // Körper
+    Rectangle {
+        x: 135px; y: 94px; width: 4px; height: 60px;
+        background: black;
+        visible: fehler_anzahl >= 5;
+    }
+
+    // Arme & Beine (vereinfacht als Kreuze/Linien)
+    // Linker Arm
+    Rectangle {
+        x: 110px; y: 110px; width: 25px; height: 4px;
+        background: black;
+        visible: fehler_anzahl >= 6;
+    }
+    // Rechter Arm
+    Rectangle {
+        x: 139px; y: 110px; width: 25px; height: 4px;
+        background: black;
+        visible: fehler_anzahl >= 6;
+    }
 }
 
 export component AppWindow inherits Window {
