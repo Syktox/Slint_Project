@@ -14,8 +14,9 @@ set(MY_SOURCES
 )
 
 # Liste aller Slint-UI-Dateien
+# Note: Man darf hier nur eine slint Datei haben. Slint Dateien sollte man in diese Datei importieren.
 set(MY_UI_FILES
-    "ui/MainWindow.slint"
+    "ui/ui.slint"
 )
 
 # C++ Standard
