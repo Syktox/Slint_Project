@@ -1,24 +1,33 @@
 #pragma once
 
+#include <string>
+
 class HangmanLogic
 {
 public:
-    HangmanLogic();
     ~HangmanLogic() = default;
 
+    //! Removed copying functionality
     HangmanLogic(const HangmanLogic&) = delete;
     HangmanLogic& operator=(const HangmanLogic&) = delete;
-
-    HangmanLogic(HangmanLogic&&) = delete;
-    HangmanLogic& operator=(HangmanLogic&&) = delete;
 
     //! Increases the errors the user made
     void IncreaseErrors() { m_errors += 1; }
     //! Returns the errors the user made
     int GetErrors() { return m_errors; }
 
+    static HangmanLogic& getInstance() 
+    {
+        static HangmanLogic instance;
+        return instance;
+    }
+
+    //! Returns a randomly secret word of given length; If no length is given, any length is possible
+    std::string GetSecretWord(int length = 0);
 
 private:
-    int m_errors;   //!< Erros of the User
+    //! private Constructor for Singleton
+    HangmanLogic();
 
+    int m_errors;   //!< Erros of the User
 };

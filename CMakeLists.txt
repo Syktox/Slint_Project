@@ -79,3 +79,7 @@ if(WIN32)
         COMMAND_EXPAND_LISTS
     )
 endif()
+
+# Add assets to the exe
+file(COPY ${CMAKE_SOURCE_DIR}/assets
+     DESTINATION ${CMAKE_BINARY_DIR})
