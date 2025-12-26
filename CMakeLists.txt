@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.31)
 # ==========================================
 # 1. PROJEKT-KONFIGURATION (Hier alles ändern)
 # ==========================================
-set(MY_PROJECT_NAME    "RaySIX")
+set(MY_PROJECT_NAME    "Hangman")
 set(MY_PROJECT_VERSION "1.0.0")
-set(MY_LIB_NAME        "RaySixCore") # Name deiner Library aus dem lib-Ordner
+set(MY_LIB_NAME        "HangmanLogic") # Name deiner Library aus dem lib-Ordner
 
 # Liste aller Quelldateien im src-Ordner
 set(MY_SOURCES
@@ -71,6 +71,7 @@ target_link_libraries(${MY_PROJECT_NAME}
     ${MY_LIB_NAME}
 )
 
+# On Windows, copy the Slint DLL next to the application binary so that it's found.
 if(WIN32)
     add_custom_command(TARGET ${MY_PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different

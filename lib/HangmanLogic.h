@@ -25,6 +25,9 @@ public:
     //! Returns a randomly secret word of given length; If no length is given, any length is possible
     std::string GetSecretWord(int length = 0);
 
+    //! Resets the game
+    void resetHangman();
+
 private:
     //! private Constructor for Singleton
     HangmanLogic();

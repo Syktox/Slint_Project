@@ -2,6 +2,8 @@
 #include <fstream>
 #include <cassert>
 #include <sstream>
+// ONLY TEst
+#include <print>
 
 HangmanLogic::HangmanLogic()
 : m_errors (0)
@@ -31,4 +33,10 @@ std::string HangmanLogic::GetSecretWord(int length /*= 0*/)
     wordFile.close();
 
     return secretWord;
+}
+
+
+void HangmanLogic::resetHangman()
+{
+    std::println("Reset button pressed");
 }

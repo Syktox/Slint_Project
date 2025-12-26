@@ -1,1 +1,57 @@
-import { AppWindow } from "MainFrame.slint";
+import { Button } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    min-width: 800px;
+    min-height: 600px;
+    title: "Hangman";
+
+    in-out property <int> error: 0;
+    in-out property <bool> reset: true;
+    callback reset_clicked();
+    in-out property <string> wort_anzeige: "_ _ _ _ _";
+    callback buchstabe_getippt(string);
+
+    forward-focus: tastatur_input;
+
+    VerticalLayout {
+        // Top row: Reset button in top-right
+        HorizontalLayout {
+            padding-top: 20px;
+            padding-right: 20px;
+            padding-left: 20px;   // optional, for symmetry
+            padding-bottom: 10px; // optional, space below the button row
+
+            // Push everything else left, button to the right
+            Rectangle {} // Spacer that takes all available space
+
+            Button {
+                text: "Reset";
+                width: 100px;
+                height: 50px;
+
+                clicked => {
+                    root.reset_clicked();
+                }
+            }
+        }
+
+        // Main content
+        VerticalLayout {
+            padding: 20px;
+            spacing: 20px;
+
+            Text {
+                text: "Hangman";
+                horizontal-alignment: center;
+                font-size: 60px;
+                TouchArea {
+                    clicked => { ++error; }
+                }
+            }
+
+            // Add more main content here...
+        }
+    }
+
+    tastatur_input := FocusScope { /* ... */ }
+}
