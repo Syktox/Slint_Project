@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.31)
 
 # ==========================================
 # 1. PROJEKT-KONFIGURATION (Hier alles ändern)
@@ -59,14 +59,23 @@ endif()
 add_subdirectory(lib)
 
 # Das Hauptprogramm erstellen (nutzt die Liste aus MY_SOURCES)
-add_executable(${PROJECT_NAME} ${MY_SOURCES})
+add_executable(${MY_PROJECT_NAME} ${MY_SOURCES})
 
 # Slint-Dateien verarbeiten (nutzt die Liste aus MY_UI_FILES)
-slint_target_sources(${PROJECT_NAME} ${MY_UI_FILES})
+slint_target_sources(${MY_PROJECT_NAME} ${MY_UI_FILES})
 
 # Verknüpfen aller Komponenten
-target_link_libraries(${PROJECT_NAME} 
+target_link_libraries(${MY_PROJECT_NAME} 
     PRIVATE 
-        Slint::Slint 
-        ${MY_LIB_NAME}
+    Slint::Slint 
+    ${MY_LIB_NAME}
 )
+
+if(WIN32)
+    add_custom_command(TARGET ${MY_PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_RUNTIME_DLLS:${MY_PROJECT_NAME}>
+        $<TARGET_FILE_DIR:${MY_PROJECT_NAME}>
+        COMMAND_EXPAND_LISTS
+    )
+endif()
