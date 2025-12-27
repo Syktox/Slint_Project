@@ -7,29 +7,16 @@ int main(void) {
     auto App ( AppWindow::create() );
 
     // Create logic
-    HangmanLogic& hLogic = HangmanLogic::getInstance();
-    std::string secretWord = hLogic.GetSecretWord(8);  
+    HangmanLogic& hLogic ( HangmanLogic::getInstance() );
+    std::string secretWord ( hLogic.GetSecretWord(8) );  
 
     App->on_reset_clicked([&] () {
         hLogic.resetHangman();
+        std::print("Secret Word: {}\n", secretWord);
     });
 
-    App->on_buchstabe_getippt([&](slint::SharedString buchstabe) {
-        std::string taste = std::string(buchstabe);
-
-        if (secretWord.find(taste) != std::string::npos) 
-        {
-            
-        }
-        else 
-        {
-            hLogic.IncreaseErrors();
-            // App->set_fehler(hLogic.GetErrors());
-        }
-        
-        if (hLogic.GetErrors() >= 6) {
-            // Spiel verloren Logik
-        }
+    App->on_start_clicked([&] () {
+        hLogic.resetHangman();
     });
     
     App->run();

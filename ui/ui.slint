@@ -1,57 +1,73 @@
-import { Button } from "std-widgets.slint";
+import { Button, TextEdit } from "std-widgets.slint";
+
+import { HomePage } from "home.slint";
+
+enum View {
+    Home,
+    Settings,
+    Game,
+}
 
 export component AppWindow inherits Window {
+    // Setup
+    title: "Hangman";
     min-width: 800px;
     min-height: 600px;
-    title: "Hangman";
 
+    property <View> active_view: View.Home;
+
+    if (active_view == View.Home) : HomePage { }
+    
+
+    // Vars
     in-out property <int> error: 0;
-    in-out property <bool> reset: true;
+
+    // Callbacks
     callback reset_clicked();
-    in-out property <string> wort_anzeige: "_ _ _ _ _";
-    callback buchstabe_getippt(string);
+    callback start_clicked();
 
-    forward-focus: tastatur_input;
+    HorizontalLayout {
+        padding-top: 20px;
+        padding-right: 20px;
+        padding-left: 20px;   // optional, for symmetry
+        padding-bottom: 10px; // optional, space below the button row
 
-    VerticalLayout {
-        // Top row: Reset button in top-right
-        HorizontalLayout {
-            padding-top: 20px;
-            padding-right: 20px;
-            padding-left: 20px;   // optional, for symmetry
-            padding-bottom: 10px; // optional, space below the button row
+        // Push everything else left, button to the right
+        Rectangle {} // Spacer that takes all available space
 
-            // Push everything else left, button to the right
-            Rectangle {} // Spacer that takes all available space
+        Button {
+            text: "Reset";
+            width: 100px;
+            height: 50px;
 
-            Button {
-                text: "Reset";
-                width: 100px;
-                height: 50px;
-
-                clicked => {
-                    root.reset_clicked();
-                }
+            clicked => {
+                root.reset_clicked();
             }
-        }
-
-        // Main content
-        VerticalLayout {
-            padding: 20px;
-            spacing: 20px;
-
-            Text {
-                text: "Hangman";
-                horizontal-alignment: center;
-                font-size: 60px;
-                TouchArea {
-                    clicked => { ++error; }
-                }
-            }
-
-            // Add more main content here...
         }
     }
 
-    tastatur_input := FocusScope { /* ... */ }
+    // Main content
+    VerticalLayout {
+        padding: 20px;
+        spacing: 20px;
+        alignment: center;
+
+        Text {
+            text: "Hangman";
+            font-size: 80px;
+        }
+
+        Rectangle { height: 200px; }
+
+        Button {
+            text: "Start";
+            width: 200px;
+            height: 50px;
+            clicked => {
+                root.start_clicked();
+            }
+        }
+             
+    }
+
 }
