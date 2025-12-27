@@ -1,6 +1,53 @@
-export component HomePage inherits Window
+import { Button } from "std-widgets.slint";
+
+export component homeView inherits Window
 { 
-    Text {
-        text: "HomePage";
+     // Callbacks
+    callback reset_clicked();
+    callback start_clicked();
+
+    HorizontalLayout 
+    {
+        padding-top: 20px;
+        padding-right: 20px;
+        padding-left: 20px;   // optional, for symmetry
+        padding-bottom: 10px; // optional, space below the button row
+
+        // Push everything else left, button to the right
+        Rectangle { } // Spacer that takes all available space
+
+        Button {
+            text: "Reset";
+            width: 100px;
+            height: 50px;
+
+            clicked => {
+                root.reset_clicked();
+            }
+        }
+    }
+
+    // Main content
+    VerticalLayout {
+        padding: 20px;
+        spacing: 20px;
+        alignment: center;
+
+        Text {
+            text: "Hangman";
+            font-size: 80px;
+        }
+
+        Rectangle { height: 200px; }
+
+        Button {
+            text: "Start";
+            width: 200px;
+            height: 50px;
+            clicked => {
+                root.start_clicked();
+            }
+        }
+             
     }
 }

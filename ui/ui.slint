@@ -1,6 +1,8 @@
-import { Button, TextEdit } from "std-widgets.slint";
+import { Button } from "std-widgets.slint";
 
-import { HomePage } from "home.slint";
+import { homeView } from "home.slint";
+import { settingsView } from "settings.slint";
+import { gameView } from "game.slint";
 
 enum View {
     Home,
@@ -14,60 +16,18 @@ export component AppWindow inherits Window {
     min-width: 800px;
     min-height: 600px;
 
-    property <View> active_view: View.Home;
+    // Views
+    in-out property <View> active_view: View.Home;
 
-    if (active_view == View.Home) : HomePage { }
-    
-
-    // Vars
-    in-out property <int> error: 0;
-
-    // Callbacks
+    // Callbacks for homeView
     callback reset_clicked();
     callback start_clicked();
 
-    HorizontalLayout {
-        padding-top: 20px;
-        padding-right: 20px;
-        padding-left: 20px;   // optional, for symmetry
-        padding-bottom: 10px; // optional, space below the button row
-
-        // Push everything else left, button to the right
-        Rectangle {} // Spacer that takes all available space
-
-        Button {
-            text: "Reset";
-            width: 100px;
-            height: 50px;
-
-            clicked => {
-                root.reset_clicked();
-            }
-        }
+    if (active_view == View.Home) : homeView { 
+        // forward Callbacks
+        reset_clicked() => { root.reset_clicked(); }
+        start_clicked => { root.start_clicked(); }
     }
-
-    // Main content
-    VerticalLayout {
-        padding: 20px;
-        spacing: 20px;
-        alignment: center;
-
-        Text {
-            text: "Hangman";
-            font-size: 80px;
-        }
-
-        Rectangle { height: 200px; }
-
-        Button {
-            text: "Start";
-            width: 200px;
-            height: 50px;
-            clicked => {
-                root.start_clicked();
-            }
-        }
-             
-    }
-
+    if (active_view == View.Settings) : settingsView { }
+    if (active_view == View.Game) : gameView { }
 }
