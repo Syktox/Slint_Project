@@ -25,11 +25,12 @@ export component AppWindow inherits Window {
     callback quit_clicked();
 
     if (active_view == View.Home) : homeView { 
-        // forward Callbacks
         start_clicked => { root.start_clicked(); }
         settings_clicked() => { root.settings_clicked(); }
         quit_clicked => { root.quit_clicked(); }
     }
-    if (active_view == View.Settings) : settingsView { }
+    
     if (active_view == View.Game) : gameView { }
+
+    if (active_view == View.Settings) : settingsView { }
 }

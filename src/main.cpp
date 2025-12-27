@@ -1,21 +1,31 @@
 #include "ui.h"
+#include "NavigationController.h"
+#include "GameController.h"
+
 #include "HangmanLogic.h"
+
 #include <print>
+#include <fstream>
 
 int main(void) {
     // Create GUI of App
     auto App ( AppWindow::create() );
 
-    // Create logic
-    HangmanLogic& hLogic ( HangmanLogic::getInstance() );
-    std::string secretWord ( hLogic.GetSecretWord(8) );  
+    // Create Controller
+    NavigationController& navController ( NavigationController::getInstance() );    
 
-    App->on_quit_clicked([&] () {
-        slint::quit_event_loop();
+    App->on_start_clicked([] () {
+        GameController gameController;
     });
     
+    App->on_settings_clicked([] () {
+        
+    });
     
-   
+    App->on_quit_clicked([] () {
+        slint::quit_event_loop();
+    });
+
     App->run();
     return 0;
 }
