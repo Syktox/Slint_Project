@@ -20,13 +20,15 @@ export component AppWindow inherits Window {
     in-out property <View> active_view: View.Home;
 
     // Callbacks for homeView
-    callback reset_clicked();
     callback start_clicked();
+    callback settings_clicked();
+    callback quit_clicked();
 
     if (active_view == View.Home) : homeView { 
         // forward Callbacks
-        reset_clicked() => { root.reset_clicked(); }
         start_clicked => { root.start_clicked(); }
+        settings_clicked() => { root.settings_clicked(); }
+        quit_clicked => { root.quit_clicked(); }
     }
     if (active_view == View.Settings) : settingsView { }
     if (active_view == View.Game) : gameView { }

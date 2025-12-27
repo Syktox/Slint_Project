@@ -1,53 +1,57 @@
 import { Button } from "std-widgets.slint";
 
-export component homeView inherits Window
+export component homeView
 { 
-     // Callbacks
-    callback reset_clicked();
+    // Callbacks
     callback start_clicked();
-
-    HorizontalLayout 
-    {
-        padding-top: 20px;
-        padding-right: 20px;
-        padding-left: 20px;   // optional, for symmetry
-        padding-bottom: 10px; // optional, space below the button row
-
-        // Push everything else left, button to the right
-        Rectangle { } // Spacer that takes all available space
-
-        Button {
-            text: "Reset";
-            width: 100px;
-            height: 50px;
-
-            clicked => {
-                root.reset_clicked();
-            }
-        }
-    }
-
-    // Main content
-    VerticalLayout {
-        padding: 20px;
-        spacing: 20px;
+    callback settings_clicked();
+    callback quit_clicked();
+    
+    property <length> buttons_padding: 100px;
+    property <length> buttons_height: 50px;
+    
+    VerticalLayout 
+    {     
         alignment: center;
-
         Text {
             text: "Hangman";
+            horizontal-alignment: center;
+            letter-spacing: 5px;
             font-size: 80px;
         }
+      
+        VerticalLayout 
+        {   
+            // Center Buttons 
+            padding-left: buttons_padding;
+            padding-right: buttons_padding;
 
-        Rectangle { height: 200px; }
+            padding-top: 200px;
+            spacing: 20px;
 
-        Button {
-            text: "Start";
-            width: 200px;
-            height: 50px;
-            clicked => {
-                root.start_clicked();
+            Button {
+                text: "Start";
+                height: buttons_height;
+                clicked => {
+                    root.start_clicked();
+                }
+            }
+
+            Button {
+                text: "Settings";
+                height: buttons_height;
+                clicked => {
+                    root.settings_clicked();
+                }
+            }
+
+            Button {
+                text: "Quit";
+                height: buttons_height;
+                clicked => {
+                    root.quit_clicked();
+                }
             }
         }
-             
     }
 }

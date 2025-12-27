@@ -10,6 +10,7 @@ int main(void) {
     HangmanLogic& hLogic ( HangmanLogic::getInstance() );
     std::string secretWord ( hLogic.GetSecretWord(8) );  
 
+    /*
     App->on_reset_clicked([&] () {
         hLogic.resetHangman();
         std::print("Secret Word: {}\n", secretWord);
@@ -18,7 +19,8 @@ int main(void) {
     App->on_start_clicked([&] () {
         hLogic.resetHangman();
     });
-    
+    */
+   
     App->run();
     return 0;
 }
