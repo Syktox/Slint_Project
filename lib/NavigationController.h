@@ -20,6 +20,7 @@ public:
         return instance;
     }
 
+    void GotoGame();
     void GotoSettings();
 
 private:

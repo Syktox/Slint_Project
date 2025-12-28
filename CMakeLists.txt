@@ -36,6 +36,11 @@ endif()
 # ==========================================
 # 3. SLINT (FIND-OR-FETCH LOGIK)
 # ==========================================
+# 1. Optionen setzen, um Ballast zu vermeiden
+set(SLINT_BUILD_EXAMPLES OFF CACHE INTERNAL "")
+set(SLINT_BUILD_TESTS OFF CACHE INTERNAL "")
+set(SLINT_BUILD_DOCS OFF CACHE INTERNAL "")
+
 include(FetchContent)
 
 find_package(Slint QUIET)
@@ -46,6 +51,7 @@ if(NOT Slint_FOUND)
         Slint
         GIT_REPOSITORY https://github.com/slint-ui/slint.git
         GIT_TAG release/1.14
+        GIT_SHALLOW TRUE
         SOURCE_SUBDIR api/cpp
     )
     FetchContent_MakeAvailable(Slint)

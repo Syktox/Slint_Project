@@ -9,3 +9,9 @@ NavigationController::NavigationController()
 void NavigationController::GotoSettings()
 {
 }
+
+
+void NavigationController::GotoGame()
+{
+    
+}
