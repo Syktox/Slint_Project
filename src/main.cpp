@@ -1,6 +1,6 @@
-#include "ui.h"
 #include "NavigationController.h"
 #include "GameController.h"
+#include "ui.h"
 
 #include "HangmanLogic.h"
 
@@ -18,13 +18,15 @@ int main(void) {
         GameController gameController;
     });
     
-    App->on_settings_clicked([] () {
-        
+    App->on_settings_clicked([&] () {
+        navController.GotoSettings();
     });
     
     App->on_quit_clicked([] () {
         slint::quit_event_loop();
     });
+
+    
 
     App->run();
     return 0;

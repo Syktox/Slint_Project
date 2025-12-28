@@ -1,5 +1,11 @@
 #pragma once
 
+enum Views {
+    Home = 0,
+    Game,
+    Settings    
+};
+
 class NavigationController
 {
 public:
@@ -14,8 +20,11 @@ public:
         return instance;
     }
 
+    void GotoSettings();
 
 private:
     NavigationController();
 
+    //! Current Page
+    Views current_view;
 };
