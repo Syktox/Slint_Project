@@ -69,8 +69,6 @@ add_subdirectory(lib)
 # Das Hauptprogramm erstellen (nutzt die Liste aus MY_SOURCES)
 add_executable(${MY_PROJECT_NAME} ${MY_SOURCES})
 
-#target_sources(${MY_PROJECT_NAME} PUBLIC )
-
 # Slint-Dateien verarbeiten (nutzt die Liste aus MY_UI_FILES)
 slint_target_sources(${MY_PROJECT_NAME} ${MY_UI_FILES})
 

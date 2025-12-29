@@ -1,21 +1,23 @@
 #pragma once
 #include "Views.h"
-#include <functional>
 
+namespace RaySIX {
+
+template <typename App>
 class NavigationController {
 public:
-    NavigationController();
+    //! The reason for the std::function<void(View)> is bc I cant add the class itself to the Controller 
+    NavigationController(App& app)
+    : m_App(app)
+    {
+
+    };
+
     virtual ~NavigationController() = default;
 
-    using Callback = std::function<void(View)>;
-
-    void set_on_navigate(Callback cb) {
-        onNavigate = cb;
-    }
-
-    void go_to(View page) {
+    void navigate (View page) {
         current = page;
-        if (onNavigate) onNavigate(page);
+        m_App->set_current_view ( page );
     }
 
     View current_page() const {
@@ -23,6 +25,8 @@ public:
     }
 
 private:
+    App& m_App; //!< Slint API used for the View; Zugriff immer als Pointer
     View current;
-    Callback onNavigate;
 };
+
+}   // RaySIX

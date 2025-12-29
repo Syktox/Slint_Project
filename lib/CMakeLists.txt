@@ -1,7 +1,7 @@
 set (LibrarySources 
      HangmanLogic.cpp HangmanLogic.h
      GameController.cpp GameController.h
-     NavigationController.cpp NavigationController.h
+     NavigationController.h
      Views.h)
 
 #add Librarys

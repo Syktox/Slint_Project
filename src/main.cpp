@@ -1,7 +1,7 @@
 #include "Application.h"
 
 int main() {
-    Application app;
+    RaySIX::Application app;
     app.run();
 
     return 0;

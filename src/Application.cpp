@@ -1,27 +1,52 @@
 #include "Application.h"
-#include "NavigationController.h"
+
+
+namespace RaySIX {
+
+Application::Application() 
+: m_AppView( AppWindow::create() )
+, m_Nav ( std::make_unique<NavigationController<AppView>>(m_AppView) )
+{
+
+};
+
+Application::~Application() = default;
 
 void Application::run() {
-    // Create GUI of App
-    auto App ( AppWindow::create() );
-    NavigationController nav;
+    HandleCallbacksHomeView();
+    HandleCallbacksSettingsView();
+    HandleCallbacksGameView();
 
-    nav.set_on_navigate([&](View p) {
-        App->set_current_view(static_cast<int>(p));
-    });
+    m_AppView->run();
+}
 
-    App->on_start_clicked([&] () {
-        nav.go_to(View::Game);
+
+void Application::HandleCallbacksHomeView()
+{
+    m_AppView->on_start_clicked([&] () {
+        m_Nav->navigate(View::Game);
     });
     
-    App->on_settings_clicked([&] () {
-        nav.go_to(View::Settings);
+    m_AppView->on_settings_clicked([&] () {
+        m_Nav->navigate(View::Settings);
     });
     
-    App->on_quit_clicked([] () {
+    m_AppView->on_quit_clicked([] () {
         slint::quit_event_loop();
         return 0;
     });
-
-    App->run();
 }
+
+
+void Application::HandleCallbacksSettingsView()
+{
+
+}
+
+
+void Application::HandleCallbacksGameView()
+{
+
+}
+
+}   // RaySIX
