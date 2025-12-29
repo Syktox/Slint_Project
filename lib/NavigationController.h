@@ -10,7 +10,6 @@ public:
     NavigationController(App& app)
     : m_App(app)
     {
-
     };
 
     virtual ~NavigationController() = default;

@@ -1,5 +1,8 @@
+import { SpinBox } from "std-widgets.slint";
 export component settingsView
 { 
+    callback letterCount(int);
+
     VerticalLayout {
         alignment: center;
         
@@ -11,5 +14,10 @@ export component settingsView
         }
 
 
+        SpinBox {
+            value: 8;
+            minimum: 1;
+            maximum: 45;
+        }
     }
 }
