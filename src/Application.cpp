@@ -4,17 +4,18 @@
 void Application::run() {
     // Create GUI of App
     auto App ( AppWindow::create() );
+    NavigationController nav;
 
-    // Create Controller
-    //NavigationController& navController ( NavigationController::getInstance() );    
+    nav.set_on_navigate([&](View p) {
+        App->set_current_view(static_cast<int>(p));
+    });
 
     App->on_start_clicked([&] () {
-        //navController.GotoGame();
-        //GameController gameController;
+        nav.go_to(View::Game);
     });
     
     App->on_settings_clicked([&] () {
-        //navController.GotoSettings();
+        nav.go_to(View::Settings);
     });
     
     App->on_quit_clicked([] () {

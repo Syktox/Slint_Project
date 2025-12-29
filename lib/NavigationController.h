@@ -1,31 +1,28 @@
 #pragma once
+#include "Views.h"
+#include <functional>
 
-enum Views {
-    Home = 0,
-    Game,
-    Settings    
-};
-
-class NavigationController
-{
+class NavigationController {
 public:
-    ~NavigationController() = default;
+    NavigationController();
+    virtual ~NavigationController() = default;
 
-    NavigationController(const NavigationController&) = delete;
-    NavigationController operator=(const NavigationController&) = delete;
+    using Callback = std::function<void(View)>;
 
-    static NavigationController& getInstance()
-    {
-        static NavigationController instance;
-        return instance;
+    void set_on_navigate(Callback cb) {
+        onNavigate = cb;
     }
 
-    void GotoGame();
-    void GotoSettings();
+    void go_to(View page) {
+        current = page;
+        if (onNavigate) onNavigate(page);
+    }
+
+    View current_page() const {
+        return current;
+    }
 
 private:
-    NavigationController();
-
-    //! Current Page
-    Views current_view;
+    View current;
+    Callback onNavigate;
 };
