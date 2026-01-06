@@ -2,6 +2,7 @@
 
 #include "ui.h"
 #include "NavigationController.h"
+#include "GameSettings.h"
 
 namespace RaySIX {
 
@@ -25,7 +26,8 @@ private:
     void HandleCallbacksGameView();
 
     AppView m_AppView;  //!< on unique_ptr needed; ComponentHandle manages itself
-    std::unique_ptr<NavigationController<AppView>> m_Nav;
+    std::unique_ptr<NavigationController<AppView>> m_Nav;   //!< Navigation Controller to handle View Navigation
+    
 };
 
 } // RaySIX

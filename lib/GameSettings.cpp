@@ -1,9 +1,12 @@
-#include "HangmanLogic.h"
+#include "GameSettings.h"
+
 #include <fstream>
 #include <cassert>
 #include <sstream>
 // ONLY TEst
 #include <print>
+
+namespace RaySIX {
 
 HangmanLogic::HangmanLogic()
 : m_errors (0)
@@ -40,3 +43,5 @@ void HangmanLogic::resetHangman()
 {
     std::println("Reset button pressed");
 }
+
+} // RaySIX

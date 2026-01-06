@@ -1,5 +1,5 @@
 set (LibrarySources 
-     HangmanLogic.cpp HangmanLogic.h
+     GameSettings.cpp GameSettings.h
      GameController.cpp GameController.h
      NavigationController.h
      Views.h)

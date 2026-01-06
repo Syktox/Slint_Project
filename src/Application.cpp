@@ -1,6 +1,5 @@
 #include "Application.h"
 
-
 namespace RaySIX {
 
 Application::Application() 

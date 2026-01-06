@@ -2,6 +2,8 @@
 
 #include <string>
 
+namespace RaySIX {
+
 class HangmanLogic
 {
 public:
@@ -34,3 +36,5 @@ private:
 
     int m_errors;   //!< Erros of the User
 };
+
+} // RaySIX
