@@ -1,3 +1,82 @@
-export component gameView
-{ 
+import { Button, VerticalBox, HorizontalBox } from "std-widgets.slint";
+
+export component gameView {
+    min-width: 600px;
+    min-height: 500px;
+    preferred-width: 800px;
+    preferred-height: 700px;
+
+    // Game State (to be linked to your C++, Rust, or JS logic)
+    in property <string> display_word: "_ A N _ _ A N"; 
+    in property <int> mistakes: 3;
+    in property <[string]> used_letters: ["A", "N"];
+    
+    callback letter_guessed(string);
+    callback reset_game();
+
+    VerticalBox {
+        padding: 30px;
+        spacing: 20px;
+        alignment: center;
+
+        // --- 1. The Gallows Area ---
+        Rectangle {
+            height: 250px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            
+            // Temporary placeholder for the drawing logic
+            Text {
+                text: "Mistakes: " + mistakes + "/6";
+                color: mistakes > 4 ? red : black;
+                font-size: 20px;
+            }
+            
+            // In a real version, you'd use Path elements here 
+            // conditioned on the 'mistakes' property.
+        }
+
+        // --- 2. The Word Display ---
+        Text {
+            text: display_word;
+            font-size: 40px;
+            font-weight: 800;
+            horizontal-alignment: center;
+            letter-spacing: 5px;
+        }
+
+        // --- 3. The Keyboard (Responsive Grid) ---
+        Rectangle {
+            VerticalLayout {
+                spacing: 10px;
+                // Simple example with two rows of letters
+                for row_letters in [
+                    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+                    ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+                    ["Z", "X", "C", "V", "B", "N", "M"]
+                ] : HorizontalBox {
+                    alignment: center;
+                    spacing: 8px;
+                    for letter in row_letters : Button {
+                        text: letter;
+                        width: 45px;
+                        height: 45px;
+                        // Disable button if letter already used
+                        enabled: true; 
+                        clicked => { root.letter_guessed(letter) }
+                    }
+                }
+            }
+        }
+
+        // --- 4. Controls ---
+        HorizontalBox {
+            alignment: center;
+            Button {
+                text: "New Game";
+                primary: true;
+                clicked => { root.reset_game() }
+            }
+        }
+    }
 }

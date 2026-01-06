@@ -5,6 +5,7 @@ namespace RaySIX {
 Application::Application() 
 : m_AppView( AppWindow::create() )
 , m_Nav ( std::make_unique<NavigationController<AppView>>(m_AppView) )
+, m_GameSettings ( std::make_unique<GameSettings>() )
 {
 
 };
@@ -23,11 +24,11 @@ void Application::run() {
 void Application::HandleCallbacksHomeView()
 {
     m_AppView->on_start_clicked([&] () {
-        m_Nav->navigate(View::Game);
+        m_Nav->navigate(ViewState::Game);
     });
     
     m_AppView->on_settings_clicked([&] () {
-        m_Nav->navigate(View::Settings);
+        m_Nav->navigate(ViewState::Settings);
     });
     
     m_AppView->on_quit_clicked([] () {
@@ -39,14 +40,14 @@ void Application::HandleCallbacksHomeView()
 
 void Application::HandleCallbacksSettingsView()
 {
-    m_AppView->on_save_clicked([&] () {
+    m_AppView->on_save_clicked([&] () {        
         // Here you would typically save the settings to a file or apply them
-        m_Nav->navigate(View::Home);
+        m_Nav->navigate(ViewState::Home);
     });
     
     m_AppView->on_cancel_clicked([&] () {
         // Discard changes and go back
-        m_Nav->navigate(View::Home);
+        m_Nav->navigate(ViewState::Home);
     });
 
 }

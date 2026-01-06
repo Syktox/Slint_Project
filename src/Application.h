@@ -27,7 +27,7 @@ private:
 
     AppView m_AppView;  //!< on unique_ptr needed; ComponentHandle manages itself
     std::unique_ptr<NavigationController<AppView>> m_Nav;   //!< Navigation Controller to handle View Navigation
-    
+    std::unique_ptr<GameSettings> m_GameSettings;  //!< Game Settings Manager
 };
 
 } // RaySIX

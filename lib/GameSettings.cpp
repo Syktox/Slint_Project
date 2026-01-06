@@ -45,7 +45,7 @@ std::string GameSettings::GetSecretWord(int length /*= 0*/)
 
 void GameSettings::resetHangman()
 {
-    std::println("Reset button pressed");
+    
 }
 
 } // RaySIX

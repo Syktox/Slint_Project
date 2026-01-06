@@ -1,0 +1,15 @@
+//! View State Enumeration
+export enum ViewState { 
+    Home, 
+    Game, 
+    Settings 
+}
+
+//! Game Settings Structure
+export struct GameSettings {
+    music_volume: float,
+    min_word_length: float,
+    max_word_length: float,
+    max_attempts: float,
+    sound_effects_enabled: bool,
+}
