@@ -3,18 +3,22 @@
 #include <fstream>
 #include <cassert>
 #include <sstream>
-// ONLY TEst
-#include <print>
+
 
 namespace RaySIX {
 
-HangmanLogic::HangmanLogic()
+GameSettings::GameSettings()
 : m_errors (0)
 {
 }
 
+GameSettings::~GameSettings() 
+{
 
-std::string HangmanLogic::GetSecretWord(int length /*= 0*/)
+};
+
+
+std::string GameSettings::GetSecretWord(int length /*= 0*/)
 {
     // Open the word list file
     std::ifstream wordFile("assets/wordlist.txt");
@@ -39,7 +43,7 @@ std::string HangmanLogic::GetSecretWord(int length /*= 0*/)
 }
 
 
-void HangmanLogic::resetHangman()
+void GameSettings::resetHangman()
 {
     std::println("Reset button pressed");
 }
