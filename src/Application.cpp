@@ -40,6 +40,15 @@ void Application::HandleCallbacksHomeView()
 
 void Application::HandleCallbacksSettingsView()
 {
+    m_AppView->on_save_clicked([&] () {
+        // Here you would typically save the settings to a file or apply them
+        m_Nav->navigate(View::Home);
+    });
+    
+    m_AppView->on_cancel_clicked([&] () {
+        // Discard changes and go back
+        m_Nav->navigate(View::Home);
+    });
 
 }
 

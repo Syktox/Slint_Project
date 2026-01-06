@@ -1,23 +1,97 @@
-import { SpinBox } from "std-widgets.slint";
-export component settingsView
-{ 
-    callback letterCount(int);
+import { VerticalBox, HorizontalBox, Slider, CheckBox, Button } from "std-widgets.slint";
 
-    VerticalLayout {
-        alignment: center;
-        
-        Text {
-            text: "Settings";
-            horizontal-alignment: center;
-            letter-spacing: 5px;
-            font-size: 80px;
+export component settingsView {
+
+    callback save_clicked();
+    callback cancel_clicked();
+
+    // Configurable properties (read/write from C++)
+    in-out property<float> music_volume: 50;
+    in-out property<float> min_word_length: 4;
+    in-out property<float> max_word_length: 10;
+    in-out property<float> max_attempts: 6;
+    in-out property<bool> sound_effects_enabled: true;
+
+    VerticalBox {
+        padding: 20px;
+        spacing: 20px;
+
+        Text { text: "Music Volume"; font-size: 16px; }
+        HorizontalBox {
+            Slider {
+                minimum: 0;
+                maximum: 100;
+                value <=> music_volume;
+            }
+            Text {
+                text: music_volume;
+                horizontal-alignment: right;
+                width: 60px;
+            }
         }
 
+        Text { text: "Minimum Word Length"; font-size: 16px; }
+        HorizontalBox {
+            Slider {
+                minimum: 3;
+                maximum: 15;
+                value <=> min_word_length;
+            }
+            Text {
+                text: min_word_length;
+                horizontal-alignment: right;
+                width: 60px;
+            }
+        }
 
-        SpinBox {
-            value: 8;
-            minimum: 1;
-            maximum: 45;
+        Text { text: "Maximum Word Length"; font-size: 16px; }
+        HorizontalBox {
+            Slider {
+                minimum: 3;
+                maximum: 15;
+                value <=> max_word_length;
+            }
+            Text {
+                text: max_word_length;
+                horizontal-alignment: right;
+                width: 60px;
+            }
+        }
+
+        Text { text: "Maximum Attempts"; font-size: 16px; }
+        HorizontalBox {
+            Slider {
+                minimum: 4;
+                maximum: 12;
+                value <=> max_attempts;
+            }
+            Text {
+                text: max_attempts;
+                horizontal-alignment: right;
+                width: 60px;
+            }
+        }
+
+        CheckBox {
+            text: "Enable Sound Effects";
+            checked <=> sound_effects_enabled;
+        }
+
+        HorizontalLayout {
+            spacing: 5px;
+            Button {
+                text: "Save";
+                clicked => {
+                    root.save_clicked();
+                }
+            }
+
+            Button {
+                text: "Close";
+                clicked => {
+                    root.cancel_clicked();
+                }
+            }
         }
     }
 }

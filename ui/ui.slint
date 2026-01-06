@@ -24,7 +24,17 @@ export component AppWindow inherits Window {
         quit_clicked => { root.quit_clicked(); }
     }
     
+    // Callbacks for gameView
+
+
     if (current_view == 1) : gameView { }
 
-    if (current_view == 2) : settingsView { }
+    // Callbacks for settingsView
+    callback save_clicked();
+    callback cancel_clicked();
+    
+    if (current_view == 2) : settingsView { 
+        save_clicked => { root.save_clicked(); }
+        cancel_clicked => { root.cancel_clicked(); }
+    }
 }
