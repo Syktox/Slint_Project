@@ -2,6 +2,9 @@ import { Button } from "std-widgets.slint";
 
 export component homeView
 { 
+    width: 100%;
+    height: 100%;
+
     // Callbacks
     callback start_clicked();
     callback settings_clicked();
@@ -10,48 +13,40 @@ export component homeView
     property <length> buttons_padding: 100px;
     property <length> buttons_height: 50px;
 
-    VerticalLayout {     
-        width: 100%;
-        height: 100%;
+    VerticalLayout {
         alignment: center;
 
         Text {
             text: "Hangman";
             horizontal-alignment: center;
             letter-spacing: 5px;
-            font-size: 80px;
+            font-size: root.width / 10;
         }
       
         VerticalLayout {   
             // Center Buttons 
-            padding-left: buttons_padding;
-            padding-right: buttons_padding;
+            padding-left: root.width / 3;
+            padding-right: root.width / 3;
 
-            padding-top: 200px;
-            spacing: 20px;
+            padding-top: root.height / 3;
+            spacing: root.height / 20;
 
             Button {
                 text: "Start";
-                height: buttons_height;
-                clicked => {
-                    root.start_clicked();
-                }
+                height: root.height / 12;
+                clicked => root.start_clicked();
             }
 
             Button {
                 text: "Settings";
-                height: buttons_height;
-                clicked => {
-                    root.settings_clicked();
-                }
+                height: root.height / 12;
+                clicked => root.settings_clicked();
             }
 
             Button {
                 text: "Quit";
-                height: buttons_height;
-                clicked => {
-                    root.quit_clicked();
-                }
+                height: root.height / 12;
+                clicked => root.quit_clicked();
             }
         }
     }

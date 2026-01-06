@@ -9,6 +9,10 @@ import { ViewState } from "types.slint";
 export component AppWindow inherits Window {
     // Setup
     title: "Hangman";
+
+    preferred-width: 100%;
+    preferred-height: 100%;
+
     min-width: 800px;
     min-height: 600px;
 
@@ -21,11 +25,11 @@ export component AppWindow inherits Window {
     callback quit_clicked();
 
     if (current_view == ViewState.Home ) : homeView { 
-        start_clicked => { root.start_clicked(); }
-        settings_clicked() => { root.settings_clicked(); }
-        quit_clicked => { root.quit_clicked(); }
+        start_clicked => root.start_clicked();
+        settings_clicked() => root.settings_clicked();
+        quit_clicked => root.quit_clicked();
     }
-    
+   
     // Callbacks for gameView
 
 
@@ -35,8 +39,8 @@ export component AppWindow inherits Window {
     callback save_clicked();
     callback cancel_clicked();
    
-    if (current_view == ViewState.Settings ) : settingsView { 
-        save_clicked => { root.save_clicked(); }
-        cancel_clicked => { root.cancel_clicked(); }
+    if (current_view == ViewState.Settings ) : settingsView {
+        save_clicked => root.save_clicked();
+        cancel_clicked => root.cancel_clicked();
     }
 }

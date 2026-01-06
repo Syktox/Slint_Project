@@ -1,6 +1,8 @@
-import { VerticalBox, HorizontalBox, Slider, CheckBox, Button } from "std-widgets.slint";
+import { VerticalBox, HorizontalBox, Slider, CheckBox, Button, TextEdit } from "std-widgets.slint";
 
 export component settingsView {
+    width: 70%;
+    height: 75%;
 
     callback save_clicked();
     callback cancel_clicked();
@@ -16,7 +18,7 @@ export component settingsView {
         padding: 20px;
         spacing: 20px;
 
-        Text { text: "Music Volume"; font-size: 16px; }
+        Text { text: "Music Volume"; font-size: parent.width / 30; }
         HorizontalBox {
             Slider {
                 minimum: 0;
@@ -26,11 +28,12 @@ export component settingsView {
             Text {
                 text: music_volume;
                 horizontal-alignment: right;
+                font-size: parent.width / 50;
                 width: 60px;
             }
         }
 
-        Text { text: "Minimum Word Length"; font-size: 16px; }
+        Text { text: "Minimum Word Length"; font-size: parent.width / 30; }
         HorizontalBox {
             Slider {
                 minimum: 3;
@@ -40,11 +43,12 @@ export component settingsView {
             Text {
                 text: min_word_length;
                 horizontal-alignment: right;
+                font-size: parent.width / 50;
                 width: 60px;
             }
         }
 
-        Text { text: "Maximum Word Length"; font-size: 16px; }
+        Text { text: "Maximum Word Length"; font-size: parent.width / 30; }
         HorizontalBox {
             Slider {
                 minimum: 3;
@@ -54,11 +58,12 @@ export component settingsView {
             Text {
                 text: max_word_length;
                 horizontal-alignment: right;
+                font-size: parent.width / 50;
                 width: 60px;
             }
         }
 
-        Text { text: "Maximum Attempts"; font-size: 16px; }
+        Text { text: "Maximum Attempts"; font-size: parent.width / 30; }
         HorizontalBox {
             Slider {
                 minimum: 4;
@@ -68,29 +73,40 @@ export component settingsView {
             Text {
                 text: max_attempts;
                 horizontal-alignment: right;
+                font-size: parent.width / 50;
                 width: 60px;
             }
         }
 
-        CheckBox {
-            text: "Enable Sound Effects";
-            checked <=> sound_effects_enabled;
+        HorizontalLayout {
+            spacing: 10px;
+            alignment: start;
+            
+            CheckBox {
+                // Wir lassen 'text' leer, um volle Kontrolle über das Label zu haben
+                checked <=> sound_effects_enabled;
+                
+                min-width: parent.width / 25; 
+                min-height: parent.width / 25;
+            }
+
+            Text {
+                text: "Enable Sound Effects";
+                font-size: parent.width / 50; // Gleiche Größe wie deine anderen Labels
+                vertical-alignment: center;
+            }
         }
 
-        HorizontalLayout {
-            spacing: 5px;
+        HorizontalBox {
+            spacing: 50px;
             Button {
                 text: "Save";
-                clicked => {
-                    root.save_clicked();
-                }
+                clicked => root.save_clicked();  
             }
 
             Button {
                 text: "Close";
-                clicked => {
-                    root.cancel_clicked();
-                }
+                clicked => root.cancel_clicked();
             }
         }
     }
