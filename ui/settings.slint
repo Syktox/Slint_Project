@@ -1,112 +1,122 @@
-import { VerticalBox, HorizontalBox, Slider, CheckBox, Button, TextEdit } from "std-widgets.slint";
+import { VerticalBox, HorizontalBox, Slider, CheckBox, Button } from "std-widgets.slint";
+import { slint_GameSettings } from "types.slint";
 
 export component settingsView {
     width: 70%;
     height: 75%;
 
+    // Callbacks for the parent logic
     callback save_clicked();
     callback cancel_clicked();
 
-    // Configurable properties (read/write from C++)
-    in-out property<float> music_volume: 50;
-    in-out property<float> min_word_length: 4;
-    in-out property<float> max_word_length: 10;
-    in-out property<float> max_attempts: 6;
-    in-out property<bool> sound_effects_enabled: true;
+    // Configurable properties (read/write from C++/Rust)
+    in-out property <slint_GameSettings> settings;
 
     VerticalBox {
         padding: 20px;
         spacing: 20px;
 
+        // --- Music Volume ---
         Text { text: "Music Volume"; font-size: parent.width / 30; }
         HorizontalBox {
             Slider {
                 minimum: 0;
                 maximum: 100;
-                value <=> music_volume;
+                value: settings.music_volume;
+                changed(v) => { settings.music_volume = v; }
             }
             Text {
-                text: music_volume;
+                text: "\{round(settings.music_volume)}";
                 horizontal-alignment: right;
                 font-size: parent.width / 50;
                 width: 60px;
             }
         }
 
+        // --- Minimum Word Length ---
         Text { text: "Minimum Word Length"; font-size: parent.width / 30; }
         HorizontalBox {
             Slider {
                 minimum: 3;
                 maximum: 15;
-                value <=> min_word_length;
+                value: settings.min_word_length;
+                changed(v) => { settings.min_word_length = v; }
             }
             Text {
-                text: min_word_length;
+                text: "\{round(settings.min_word_length)}";
                 horizontal-alignment: right;
                 font-size: parent.width / 50;
                 width: 60px;
             }
         }
 
+        // --- Maximum Word Length ---
         Text { text: "Maximum Word Length"; font-size: parent.width / 30; }
         HorizontalBox {
             Slider {
                 minimum: 3;
                 maximum: 15;
-                value <=> max_word_length;
+                value: settings.max_word_length;
+                changed(v) => { settings.max_word_length = v; }
             }
             Text {
-                text: max_word_length;
+                text: "\{round(settings.max_word_length)}";
                 horizontal-alignment: right;
                 font-size: parent.width / 50;
                 width: 60px;
             }
         }
 
+        // --- Maximum Attempts ---
         Text { text: "Maximum Attempts"; font-size: parent.width / 30; }
         HorizontalBox {
             Slider {
                 minimum: 4;
                 maximum: 12;
-                value <=> max_attempts;
+                value: settings.max_attempts;
+                changed(v) => { settings.max_attempts = v; }
             }
             Text {
-                text: max_attempts;
+                text: "\{round(settings.max_attempts)}";
                 horizontal-alignment: right;
                 font-size: parent.width / 50;
                 width: 60px;
             }
         }
 
+        // --- Sound Effects Toggle ---
         HorizontalLayout {
             spacing: 10px;
             alignment: start;
             
             CheckBox {
-                // Wir lassen 'text' leer, um volle Kontrolle über das Label zu haben
-                checked <=> sound_effects_enabled;
-                
+                checked: settings.sound_effects_enabled;
+                toggled => {
+                    settings.sound_effects_enabled = !settings.sound_effects_enabled;
+                }
                 min-width: parent.width / 25; 
                 min-height: parent.width / 25;
             }
 
             Text {
                 text: "Enable Sound Effects";
-                font-size: parent.width / 50; // Gleiche Größe wie deine anderen Labels
+                font-size: parent.width / 50;
                 vertical-alignment: center;
             }
         }
 
+        // --- Action Buttons ---
         HorizontalBox {
             spacing: 50px;
             Button {
                 text: "Save";
-                clicked => root.save_clicked();  
+                primary: true;
+                clicked => { root.save_clicked(); }
             }
 
             Button {
                 text: "Close";
-                clicked => root.cancel_clicked();
+                clicked => { root.cancel_clicked(); }
             }
         }
     }

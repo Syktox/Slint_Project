@@ -25,6 +25,9 @@ private:
     //! Handles all Callbacks for the GameView
     void HandleCallbacksGameView();
 
+    //! Initialize Game Settings in the UI from m_GameSettings
+    void InitGameSettings();
+
     AppView m_AppView;  //!< on unique_ptr needed; ComponentHandle manages itself
     std::unique_ptr<NavigationController<AppView>> m_Nav;   //!< Navigation Controller to handle View Navigation
     std::unique_ptr<GameSettings> m_GameSettings;  //!< Game Settings Manager

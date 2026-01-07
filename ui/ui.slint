@@ -4,7 +4,7 @@ import { homeView } from "home.slint";
 import { settingsView } from "settings.slint";
 import { gameView } from "game.slint";
 
-import { ViewState } from "types.slint";
+import { ViewState, slint_GameSettings } from "types.slint";
 
 export component AppWindow inherits Window {
     // Setup
@@ -38,9 +38,13 @@ export component AppWindow inherits Window {
     // Callbacks for settingsView
     callback save_clicked();
     callback cancel_clicked();
+
+    in-out property <slint_GameSettings> settings;
    
     if (current_view == ViewState.Settings ) : settingsView {
         save_clicked => root.save_clicked();
         cancel_clicked => root.cancel_clicked();
+        
+        settings <=> root.settings;
     }
 }

@@ -8,8 +8,13 @@
 namespace RaySIX {
 
 GameSettings::GameSettings()
-: m_errors (0)
+: m_uiMusicVolume(50)
+, m_uiMinimumWordLength(3)
+, m_uiMaximumWordLength(10)
+, m_uiMaxAttempts(6)
+, m_bEnableSoundEffects(true)
 {
+
 }
 
 GameSettings::~GameSettings() 
@@ -42,10 +47,5 @@ std::string GameSettings::GetSecretWord(int length /*= 0*/)
     return secretWord;
 }
 
-
-void GameSettings::resetHangman()
-{
-    
-}
 
 } // RaySIX
