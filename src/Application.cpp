@@ -40,18 +40,33 @@ void Application::HandleCallbacksHomeView()
 
 void Application::HandleCallbacksSettingsView()
 {
-    m_AppView->on_save_clicked([&] () {     
-        // m_GameSettings->SetMusicVolume ( (int) m_AppView->get_music_volume() );
-        // m_GameSettings->SetMinimumWordLength ( m_AppView->get_min_word_length() );
-        // m_GameSettings->SetMaximumWordLength ( m_AppView->get_max_word_length() );
-        // m_GameSettings->SetMaxAttempts ( m_AppView->get_max_attempts() );
-        // m_GameSettings->SetSoundEffectsEnabled ( m_AppView->get_enable_sound_effects() );
+    m_AppView->on_save_clicked([&] () {  
+        // Get Settings and save it.
+        slint_GameSettings settings = m_AppView->get_settings();
+        m_GameSettings->SetMusicVolume( static_cast<int>( settings.music_volume ) );
+        m_GameSettings->SetMinimumWordLength( static_cast<int>( settings.min_word_length ) );
+        m_GameSettings->SetMaximumWordLength( static_cast<int>( settings.max_word_length ) );
+        m_GameSettings->SetMaxAttempts( static_cast<int>( settings.max_attempts ) );
+        m_GameSettings->SetSoundEffectsEnabled( settings.sound_effects_enabled );
                 
         // Here you would typically save the settings to a file or apply them
         m_Nav->navigate(ViewState::Home);
     });
     
     m_AppView->on_cancel_clicked([&] () {
+        // Create settings from current GameSettings and set it in the UI
+        slint_GameSettings settings
+        {
+            .music_volume = static_cast<float>( m_GameSettings->GetMusicVolume() ),
+            .min_word_length = static_cast<float>( m_GameSettings->GetMinimumWordLength() ),
+            .max_word_length = static_cast<float>( m_GameSettings->GetMaximumWordLength() ),
+            .max_attempts = static_cast<float>( m_GameSettings->GetMaxAttempts() ),
+            .sound_effects_enabled = m_GameSettings->AreSoundEffectsEnabled()
+        };
+
+        // Set the settings in the UI
+        m_AppView->set_settings( settings );
+
         // Discard changes and go back
         m_Nav->navigate(ViewState::Home);
     });
