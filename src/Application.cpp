@@ -76,7 +76,9 @@ void Application::HandleCallbacksSettingsView()
 
 void Application::HandleCallbacksGameView()
 {
-
+    m_AppView->on_home_clicked([&] () {
+        m_Nav->navigate(ViewState::Home);
+    });
 }
 
 void Application::InitGameSettings()

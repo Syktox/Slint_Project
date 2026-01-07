@@ -31,9 +31,11 @@ export component AppWindow inherits Window {
     }
    
     // Callbacks for gameView
+    callback home_clicked();
 
-
-    if (current_view == ViewState.Game ): gameView { }
+    if (current_view == ViewState.Game ): gameView { 
+        home_clicked() => root.home_clicked();
+    }
 
     // Callbacks for settingsView
     callback save_clicked();

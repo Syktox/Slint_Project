@@ -1,80 +1,85 @@
 import { Button, VerticalBox, HorizontalBox } from "std-widgets.slint";
 
-export component gameView {
-    width: 100%;
-    height: 100%;
-
-    // Game State (to be linked to your C++, Rust, or JS logic)
-    in property <string> display_word: "_ A N _ _ A N"; 
-    in property <int> mistakes: 3;
-    in property <[string]> used_letters: ["A", "N"];
+export component gameView  {
+    // State managed by C++
+    in property <string> display_word: "_ _ _ _ _";
+    in property <int> mistakes: 0;
+    in property <bool> game_over: false;
+    in property <string> status_message: "Guess a letter!";
     
-    callback letter_guessed(string);
+    // Callbacks to C++
+    callback letter_pressed(string);
     callback reset_game();
+    callback home_clicked();
 
     VerticalBox {
-        padding: 30px;
+        alignment: start;
         spacing: 20px;
-        alignment: center;
 
-        // --- 1. The Gallows Area ---
+        // Visual Hangman
         Rectangle {
-            height: 250px;
-            background: #f0f0f0;
-            border-radius: 10px;
+            height: 200px;
+            background: #34495e;
+            border-radius: 8px;
             
-            // Temporary placeholder for the drawing logic
-            Text {
-                text: "Mistakes: " + mistakes + "/6";
-                color: mistakes > 4 ? red : black;
-                font-size: 20px;
-            }
-            
-            // In a real version, you'd use Path elements here 
-            // conditioned on the 'mistakes' property.
+            // Gallows Structure
+            Rectangle { x: 50px; y: 180px; width: 100px; height: 5px; background: white; } 
+            Rectangle { x: 75px; y: 20px; width: 5px; height: 160px; background: white; }  
+            Rectangle { x: 75px; y: 20px; width: 60px; height: 5px; background: white; }   
+            Rectangle { x: 135px; y: 20px; width: 2px; height: 20px; background: white; }  
+
+            // Body Parts
+            if (mistakes > 0) : Rectangle { x: 125px; y: 40px; width: 22px; height: 22px; border-radius: 11px; border-width: 2px; border-color: white; }
+            if (mistakes > 1) : Rectangle { x: 135px; y: 62px; width: 2px; height: 50px; background: white; }
+            if (mistakes > 2) : Rectangle { x: 115px; y: 75px; width: 20px; height: 2px; background: white; }
+            if (mistakes > 3) : Rectangle { x: 137px; y: 75px; width: 20px; height: 2px; background: white; }
+            if (mistakes > 4) : Path { commands: "M 135 112 L 120 140"; stroke: white; stroke-width: 2px; }
+            if (mistakes > 5) : Path { commands: "M 137 112 L 152 140"; stroke: white; stroke-width: 2px; }
         }
 
-        // --- 2. The Word Display ---
         Text {
             text: display_word;
-            font-size: 40px;
-            font-weight: 800;
+            font-size: 32px;
+            color: white;
             horizontal-alignment: center;
             letter-spacing: 5px;
         }
 
-        // --- 3. The Keyboard (Responsive Grid) ---
-        Rectangle {
-            VerticalLayout {
-                spacing: 10px;
-                // Simple example with two rows of letters
-                for row_letters in [
-                    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-                    ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-                    ["Z", "X", "C", "V", "B", "N", "M"]
-                ] : HorizontalBox {
-                    alignment: center;
-                    spacing: 8px;
-                    for letter in row_letters : Button {
-                        text: letter;
-                        width: 45px;
-                        height: 45px;
-                        // Disable button if letter already used
-                        enabled: true; 
-                        clicked => { root.letter_guessed(letter) }
-                    }
+        Text {
+            text: status_message;
+            color: game_over ? #e74c3c : #ecf0f1;
+            horizontal-alignment: center;
+        }
+
+        // Letter Keyboard
+        VerticalBox {
+            for row in [
+                ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+                ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+                ["Z", "X", "C", "V", "B", "N", "M"]
+            ] : HorizontalBox {
+                alignment: center;
+                for key in row : Button {
+                    text: key;
+                    enabled: !game_over;
+                    clicked => { root.letter_pressed(key) }
                 }
             }
         }
 
-        // --- 4. Controls ---
         HorizontalBox {
-            alignment: center;
             Button {
                 text: "New Game";
                 primary: true;
                 clicked => { root.reset_game() }
             }
+
+            Button {
+                text: "Home";
+                primary: true;
+                clicked => { root.home_clicked() }
+            }
         }
+        
     }
 }
