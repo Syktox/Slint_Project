@@ -1,11 +1,12 @@
 import { Button, VerticalBox, HorizontalBox } from "std-widgets.slint";
 
 export component gameView  {
-    // State managed by C++
-    in property <string> display_word: "_ _ _ _ _";
-    in property <int> mistakes: 0;
-    in property <bool> game_over: false;
-    in property <string> status_message: "Guess a letter!";
+    //! Properties set from C++
+    in property <string> display_word;
+    in property <string> status_msg;
+    in property <int> mistakes;
+    in property <bool> game_won;
+    in property <bool> game_over;
     
     // Callbacks to C++
     callback letter_pressed(string);
@@ -46,7 +47,7 @@ export component gameView  {
         }
 
         Text {
-            text: status_message;
+            text: status_msg;
             color: game_over ? #e74c3c : #ecf0f1;
             horizontal-alignment: center;
         }

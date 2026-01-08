@@ -31,9 +31,25 @@ export component AppWindow inherits Window {
     }
    
     // Callbacks for gameView
+    callback letter_pressed(string);
+    callback reset_game();
     callback home_clicked();
 
+    // forward-focus: 
+    forward-focus: key-handler;
+    
+    key-handler := FocusScope {
+        key-pressed(event) => {
+            root.letter_pressed(event.text.to-uppercase());
+            accept
+        }
+    }
+
+    init => { key-handler.focus(); }
+
     if (current_view == ViewState.Game ): gameView { 
+        letter_pressed(l) => root.letter_pressed(l);
+        reset_game() => root.reset_game();
         home_clicked() => root.home_clicked();
     }
 

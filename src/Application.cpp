@@ -1,5 +1,7 @@
 #include "Application.h"
 
+#include <print>
+
 namespace RaySIX {
 
 Application::Application() 
@@ -78,6 +80,10 @@ void Application::HandleCallbacksSettingsView()
 
 void Application::HandleCallbacksGameView()
 {
+    m_AppView->on_letter_pressed([&] (slint::SharedString letter) {
+        m_GameController->GuessLetter(letter.data());
+    });
+
     m_AppView->on_home_clicked([&] () {
         m_Nav->navigate(ViewState::Home);
     });
