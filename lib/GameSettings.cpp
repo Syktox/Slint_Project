@@ -1,5 +1,6 @@
 #include "GameSettings.h"
 
+#include <algorithm>
 #include <fstream>
 #include <cassert>
 #include <sstream>
@@ -43,6 +44,9 @@ std::string GameSettings::GetSecretWord(int length /*= 0*/)
     }
     
     wordFile.close();
+
+    // Convert to uppercase
+    std::transform(secretWord.begin(), secretWord.end(), secretWord.begin(), [](unsigned char c) {    return std::toupper(c);  });
 
     return secretWord;
 }

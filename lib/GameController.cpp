@@ -6,6 +6,7 @@ namespace RaySIX {
 
 GameController::GameController(const GameSettings& settings)
 : m_GameSettings ( settings )
+, m_Mistakes ( 0 )
 {
 
 }
@@ -18,26 +19,43 @@ GameController::~GameController()
 
 void GameController::StartGame()
 {
-    std::printf("Game Started %d - %d attempts\n", m_GameSettings.GetMinimumWordLength(), m_GameSettings.GetMaxAttempts());
+    m_SecretWord = m_GameSettings.GetSecretWord();
+    m_DisplayWord = std::string( m_SecretWord.length(), '_' );
+    m_Mistakes = 0;
+
+    std::printf("%s\t\t(Display Word: %s)\n", m_SecretWord.c_str(), m_DisplayWord.c_str());    
 }
 
-bool GuessLetter(const std::string& letter)
+bool GameController::GuessLetter(std::string_view letter)
 {
+    if (letter.empty()) 
+        return false;
+    
+    if (letter.find(m_SecretWord) != std::string::npos) 
+    {
+      return true;
+    }
+    else 
+    {
+        m_Mistakes++;
+        std::printf("Incorrect guess. Total mistakes: %d\n", m_Mistakes);
+        return false;
+    }
 
-
+    return false;
 }
 
-bool IsGameOver() const
+bool GameController::IsGameOver() const
 {
-
+    return false;
 }
 
-bool IsGameWon() const
+bool GameController::IsGameWon() const
 {
-
+    return false;
 }
 
-void UpdateGameUI()
+void GameController::UpdateGameUI()
 {
 
 }

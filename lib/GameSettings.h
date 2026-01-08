@@ -15,7 +15,7 @@ public:
     GameSettings();
     virtual ~GameSettings();
 
-    //! Returns a randomly secret word of given length; If no length is given, any length is possible
+    //! Returns a randomly secret word of given length; If no length is given, any length is possible (returns UPPERCASE)
     std::string GetSecretWord(int length = 0);
 
     //! Get music volume (0-100)

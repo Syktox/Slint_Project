@@ -81,7 +81,7 @@ void Application::HandleCallbacksSettingsView()
 void Application::HandleCallbacksGameView()
 {
     m_AppView->on_letter_pressed([&] (slint::SharedString letter) {
-        m_GameController->GuessLetter(letter.data());
+        m_GameController->GuessLetter(std::string_view ( letter ) );
     });
 
     m_AppView->on_home_clicked([&] () {
