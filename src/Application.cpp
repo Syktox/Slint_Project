@@ -82,6 +82,15 @@ void Application::HandleCallbacksGameView()
 {
     m_AppView->on_letter_pressed([&] (slint::SharedString letter) {
         m_GameController->GuessLetter(std::string_view ( letter ) );
+        auto gameState = m_GameController->GetState(); 
+
+        // Update the UI with the new game state
+        m_AppView->set_display_word( slint::SharedString( gameState.displayWord ) );
+        // m_AppView->set_mistakes( static_cast<float>( gameState.mistakes) );
+    });
+
+    m_AppView->on_reset_game([&] () {
+        m_GameController->StartGame();
     });
 
     m_AppView->on_home_clicked([&] () {

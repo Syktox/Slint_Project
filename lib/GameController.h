@@ -4,6 +4,12 @@
 
 namespace RaySIX {
 
+struct GameState {
+    std::string displayWord;
+    int mistakes;
+    bool gameOver;
+    bool gameWon;
+};
 
 class GameController {
 public:
@@ -16,8 +22,8 @@ public:
     bool IsGameOver() const;
     bool IsGameWon() const;
 
-    //! Updates the Game UI with current game state
-    void UpdateGameUI();
+    //! Returns the Game State to update the UI
+    GameState GetState() const;
 
 private:
     GameSettings m_GameSettings; //!< Reference to the Game Settings

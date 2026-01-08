@@ -19,7 +19,7 @@ GameController::~GameController()
 
 void GameController::StartGame()
 {
-    m_SecretWord = m_GameSettings.GetSecretWord();
+    m_SecretWord = m_GameSettings.GetSecretWord( m_GameSettings.GetMaximumWordLength() );
     m_DisplayWord = std::string( m_SecretWord.length(), '_' );
     m_Mistakes = 0;
 
@@ -55,9 +55,14 @@ bool GameController::IsGameWon() const
     return false;
 }
 
-void GameController::UpdateGameUI()
+GameState GameController::GetState() const
 {
-
+    return { 
+        m_DisplayWord, 
+        m_Mistakes, 
+        IsGameOver(), 
+        IsGameWon() 
+    };
 }
 
 } // RaySIX
