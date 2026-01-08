@@ -6,6 +6,7 @@ Application::Application()
 : m_AppView( AppWindow::create() )
 , m_Nav ( std::make_unique<NavigationController<AppView>>(m_AppView) )
 , m_GameSettings ( std::make_unique<GameSettings>() )
+, m_GameController ( std::make_unique<GameController> ( *m_GameSettings ) )
 {
     InitGameSettings();
 };
@@ -24,6 +25,7 @@ void Application::run() {
 void Application::HandleCallbacksHomeView()
 {
     m_AppView->on_start_clicked([&] () {
+        m_GameController->StartGame();
         m_Nav->navigate(ViewState::Game);
     });
     
