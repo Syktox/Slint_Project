@@ -1,14 +1,16 @@
 import { Button, VerticalBox, HorizontalBox } from "std-widgets.slint";
 
-import { Gallows } from "gallows.slint";
+import { Gallows } from "../ui/gallows.slint";
 
 export component gameView  {
-    width: 100%;
-    height: 100%;
+    // width: 1920px;
+    // height: 1080px;
+
+    width: 800px;
+    height: 600px;
 
     //! Properties set from C++
     in property <string> display_word: "_ _ _";
-    in property <string> status_msg;
     in property <int> mistakes;
     in property <bool> game_won;
     in property <bool> game_over;
@@ -21,19 +23,17 @@ export component gameView  {
      // Breite/Höhe dynamisch, aber begrenzt
     property<float> scale_factor: min(root.width / 800px, root.height / 600px) / 1.1;
 
-    VerticalBox {
+    VerticalLayout {
         alignment: center;
 
         width: min(root.width, 800px) * scale_factor;
         height: min(root.height, 600px) * scale_factor;
 
-        padding: min(min(root.width, root.height) * 0.04, 32px) / scale_factor;
-        spacing: min(root.height * 0.02, 16px) / scale_factor;
+        spacing: min(root.height * 0.01, 16px) / scale_factor;
 
         Gallows {
-            mistakes <=> root.mistakes;
-            width: 65%;                    // or 55-75% — play with this
-            height: 50%;                   // usually smaller than width to fit nicely
+            width: 60%;
+            height: 80%;
         }
 
         Text {
@@ -42,12 +42,6 @@ export component gameView  {
             color: white;
             horizontal-alignment: center;
             letter-spacing: 5px;
-        }
-
-        Text {
-            text: status_msg;
-            color: game_over ? #e74c3c : #ecf0f1;
-            horizontal-alignment: center;
         }
 
         // Letter Keyboard

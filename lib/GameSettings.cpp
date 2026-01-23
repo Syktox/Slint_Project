@@ -16,7 +16,7 @@ GameSettings::GameSettings()
 , m_bEnableSoundEffects(true)
 {
 
-}
+}                                                               
 
 GameSettings::~GameSettings() 
 {
